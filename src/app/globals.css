@@ -1,26 +1,165 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-*: initial;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-canvas: #080d27;
+  --color-surface: #0d1535;
+  --color-card: #111a3d;
+  --color-elevated: #17224d;
+  --color-elevated-hover: #1c2958;
+
+  --color-primary: #742bff;
+  --color-primary-hover: #8447ff;
+  --color-primary-end: #5b3cff;
+  --color-primary-soft: #b593ff;
+  --color-secondary: #16a7ff;
+  --color-accent: #28d7e8;
+
+  --color-foreground: #f4f5ff;
+  --color-muted: #a9b2d7;
+
+  --color-success: #17d6a0;
+  --color-warning: #ffaa36;
+  --color-danger: #ff5d8f;
+
+  --color-border: rgb(169 178 215 / 0.12);
+  --color-border-strong: rgb(169 178 215 / 0.24);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-card: 1rem;
+
+  --shadow-card: 0 1px 2px rgb(3 6 20 / 0.35), 0 12px 32px -16px rgb(3 6 20 / 0.6);
+  --shadow-popover: 0 16px 40px -12px rgb(3 6 20 / 0.75), 0 2px 6px rgb(3 6 20 / 0.4);
+  --shadow-glow: 0 8px 24px -10px rgb(116 43 255 / 0.55);
+  --shadow-glow-blue: 0 8px 24px -10px rgb(22 167 255 / 0.45);
+
+  --animate-fade-in: fade-in 150ms ease-out;
+  --animate-pop-in: pop-in 160ms ease-out;
+  --animate-slide-up: slide-up 200ms ease-out;
+  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
+  --animate-typing: typing 1.2s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 1.6s ease-out infinite;
+  --animate-voice-fast: voice-bar 0.9s ease-in-out infinite;
+  --animate-voice-slow: voice-bar 1.6s ease-in-out infinite;
+  --animate-voice-pulse: voice-pulse 1.4s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: scale(0.97) translateY(-2px);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes typing {
+    0%,
+    80%,
+    100% {
+      opacity: 0.3;
+      transform: translateY(0);
+    }
+    40% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+
+  @keyframes pulse-ring {
+    from {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+  }
+
+  @keyframes voice-bar {
+    0%,
+    100% {
+      transform: scaleY(0.3);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes voice-pulse {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    background-image:
+      radial-gradient(60rem 30rem at 85% -10%, rgb(116 43 255 / 0.12), transparent 70%),
+      radial-gradient(50rem 25rem at -10% 10%, rgb(22 167 255 / 0.08), transparent 70%);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: rgb(116 43 255 / 0.4);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
 }
