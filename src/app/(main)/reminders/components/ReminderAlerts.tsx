@@ -68,7 +68,7 @@ export function ReminderAlerts() {
     ]);
     playChime();
     speak(`فكّرتك: ${reminder.title}`);
-    if (document.visibilityState !== "visible") showSystemNotification(`⏰ ${reminder.title}`, body, toastId);
+    if (document.visibilityState !== "visible") void showSystemNotification(`⏰ ${reminder.title}`, body, toastId, "/reminders");
   });
 
   const fireHeadsUp = useEffectEvent((item: HeadsUpItem) => {
@@ -99,7 +99,7 @@ export function ReminderAlerts() {
     ]);
     playChime();
     speak(message);
-    if (document.visibilityState !== "visible") showSystemNotification(`⏳ ${item.title}`, message, toastId);
+    if (document.visibilityState !== "visible") void showSystemNotification(`⏳ ${item.title}`, message, toastId, "/tasks");
   });
 
   useEffect(() => {

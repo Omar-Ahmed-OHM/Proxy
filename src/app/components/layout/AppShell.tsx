@@ -1,3 +1,4 @@
+import { InstallAppButton } from "@/app/components/pwa/InstallAppButton";
 import { AccountMenu } from "./AccountMenu";
 import { Brand } from "./Brand";
 import { HeaderNotifications } from "./HeaderNotifications";
@@ -29,6 +30,7 @@ export function AppShell({ children }: AppShellProps) {
             <Brand className="md:hidden" />
             <HeaderSearch className="hidden max-w-xl flex-1 md:block" />
             <div className="ml-auto flex items-center gap-2 sm:gap-3">
+              <InstallAppButton />
               <HeaderNotifications />
               <AccountMenu variant="header" />
             </div>

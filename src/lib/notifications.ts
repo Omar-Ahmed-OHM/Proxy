@@ -12,10 +12,24 @@ export async function requestNotificationPermission(): Promise<NotificationPermi
   }
 }
 
-export function showSystemNotification(title: string, body?: string, tag?: string) {
+export async function showSystemNotification(title: string, body?: string, tag?: string, url = "/") {
   if (!notificationsSupported() || Notification.permission !== "granted") return;
+  const options: NotificationOptions = {
+    body,
+    tag,
+    lang: "ar",
+    dir: "rtl",
+    icon: "/icons/icon-192.png",
+    badge: "/icons/badge-96.png",
+    data: { url },
+  };
   try {
-    const notification = new Notification(title, { body, tag, lang: "ar", dir: "rtl" });
+    const registration = "serviceWorker" in navigator ? await navigator.serviceWorker.getRegistration() : undefined;
+    if (registration) {
+      await registration.showNotification(title, options);
+      return;
+    }
+    const notification = new Notification(title, options);
     notification.onclick = () => {
       window.focus();
       notification.close();

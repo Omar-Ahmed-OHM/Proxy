@@ -81,3 +81,11 @@ Non-component code stays outside `app/`:
 When a route-level component starts being used by a second route, move it to `src/app/components/shared/`.
 
 Reuse these before you write new markup.
+
+## PWA
+
+- `src/app/manifest.ts` is the web app manifest; icons live in `public/icons/` (generated from `icon.svg`).
+- `public/sw.js` caches `/_next/static` and icons (cache-first), pages network-first with `/offline` as the fallback, never touches the API, and opens the right page on notification click. Bump `VERSION` in it when the caching logic changes.
+- `ServiceWorkerRegister` (root layout) registers the worker in production only; set `NEXT_PUBLIC_ENABLE_SW=true` to try it in dev. `InstallAppButton` in the top bar uses `beforeinstallprompt`, and shows Add-to-Home-Screen steps on iOS.
+- System notifications go through `registration.showNotification` (`src/lib/notifications.ts`), which is required on Android.
+- `src/proxy.ts` must keep `sw.js`, `manifest.webmanifest`, `icons/` and `/offline` public.
