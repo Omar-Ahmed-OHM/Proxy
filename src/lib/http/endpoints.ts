@@ -41,7 +41,7 @@ export const ENDPOINTS = {
   },
   dashboard: {
     summary: "/dashboard/summary",
-    weather: "/weather",
+    weather: "/dashboard/weather",
   },
   settings: {
     root: "/settings",

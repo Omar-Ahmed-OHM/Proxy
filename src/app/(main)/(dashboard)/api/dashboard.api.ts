@@ -1,10 +1,22 @@
 import { ENDPOINTS, httpClient } from "@/lib/http";
-import type { DashboardSummary, Weather } from "../types";
+import type { DashboardSummary, DashboardSummaryResponse, Weather, WeatherResponse } from "../types";
 
-export function getDashboardSummary(signal?: AbortSignal) {
-  return httpClient.get<DashboardSummary>(ENDPOINTS.dashboard.summary, { signal });
+function browserTimeZone() {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 
-export function getWeather(signal?: AbortSignal) {
-  return httpClient.get<Weather>(ENDPOINTS.dashboard.weather, { signal });
+export async function getDashboardSummary(signal?: AbortSignal): Promise<DashboardSummary> {
+  const { summary } = await httpClient.get<DashboardSummaryResponse>(ENDPOINTS.dashboard.summary, {
+    params: { timezone: browserTimeZone() },
+    signal,
+  });
+  return summary;
+}
+
+export async function getWeather(signal?: AbortSignal): Promise<Weather> {
+  const { weather } = await httpClient.get<WeatherResponse>(ENDPOINTS.dashboard.weather, {
+    params: { timezone: browserTimeZone() },
+    signal,
+  });
+  return weather;
 }

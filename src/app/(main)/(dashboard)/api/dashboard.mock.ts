@@ -15,6 +15,6 @@ function summary(): DashboardSummary {
 }
 
 export const dashboardMock: MockRoute[] = [
-  { method: "GET", path: ENDPOINTS.dashboard.summary, handler: () => mockReply(summary()) },
-  { method: "GET", path: ENDPOINTS.dashboard.weather, handler: () => mockReply(weather) },
+  { method: "GET", path: ENDPOINTS.dashboard.summary, handler: () => mockReply({ summary: summary() }) },
+  { method: "GET", path: ENDPOINTS.dashboard.weather, handler: () => mockReply({ weather }) },
 ];

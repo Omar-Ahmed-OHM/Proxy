@@ -18,10 +18,10 @@ const backendMocks = [
   ...remindersMock,
   ...dailyPlanMock,
   ...assistantMock,
+  ...dashboardMock,
 ];
 
 const pendingMocks = [
-  ...dashboardMock,
   ...calendarMock,
   ...notesMock,
   ...settingsMock,

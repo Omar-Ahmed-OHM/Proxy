@@ -39,6 +39,14 @@ export interface DashboardSummary {
   dayStreak: DashboardStat;
 }
 
+export interface DashboardSummaryResponse {
+  summary: DashboardSummary;
+}
+
+export interface WeatherResponse {
+  weather: Weather;
+}
+
 export type DashboardStatKey = keyof DashboardSummary;
 
 export interface DashboardStatConfig {
