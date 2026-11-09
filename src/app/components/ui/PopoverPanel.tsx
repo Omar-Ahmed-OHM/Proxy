@@ -9,8 +9,8 @@ const sideClasses: Record<PopoverSide, string> = {
 };
 
 const alignClasses: Record<PopoverAlign, string> = {
-  start: "left-0",
-  center: "left-1/2 -translate-x-1/2",
+  start: "right-1/2 translate-x-1/4",
+  center: "right-1/2 -translate-x-1/4",
   end: "right-0",
 };
 
