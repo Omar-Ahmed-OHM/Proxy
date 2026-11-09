@@ -1,4 +1,4 @@
-const VERSION = "proxy-v1";
+const VERSION = "proxy-v2";
 const STATIC_CACHE = `${VERSION}-static`;
 const PAGE_CACHE = `${VERSION}-pages`;
 const OFFLINE_URL = "/offline";
@@ -60,6 +60,42 @@ self.addEventListener("fetch", (event) => {
   if (isStaticAsset(url)) {
     event.respondWith(cacheFirst(request));
   }
+});
+
+function readPushData(event) {
+  if (!event.data) return {};
+  try {
+    return event.data.json();
+  } catch {
+    return { body: event.data.text() };
+  }
+}
+
+self.addEventListener("push", (event) => {
+  const data = readPushData(event);
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+      if (clients.some((client) => client.visibilityState === "visible")) return;
+      return self.registration.showNotification(data.title ?? "تذكير", {
+        body: data.body,
+        tag: data.tag,
+        renotify: Boolean(data.tag),
+        lang: "ar",
+        dir: "rtl",
+        icon: "/icons/icon-192.png",
+        badge: "/icons/badge-96.png",
+        data: { url: data.url ?? "/" },
+      });
+    }),
+  );
+});
+
+self.addEventListener("pushsubscriptionchange", (event) => {
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+      clients.forEach((client) => client.postMessage({ type: "push-resubscribe" }));
+    }),
+  );
 });
 
 self.addEventListener("notificationclick", (event) => {

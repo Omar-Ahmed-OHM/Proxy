@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { profileKeys } from "@/app/(main)/profile/hooks/useCurrentUser";
 import { clearAuthToken, setAuthToken } from "@/lib/auth/token";
+import { removePushSubscription } from "@/lib/push";
 import { login, register } from "../api/auth.api";
 import type { AuthResponse } from "../types";
 
@@ -35,7 +36,8 @@ export function useLogout() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  return useCallback(() => {
+  return useCallback(async () => {
+    await removePushSubscription();
     clearAuthToken();
     queryClient.clear();
     router.replace("/login");

@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query";
 import { requestNotificationPermission } from "@/lib/notifications";
+import { syncPushSubscription } from "@/lib/push";
 import {
   cancelReminder,
   completeReminder,
@@ -77,7 +78,9 @@ export function useCreateReminder() {
   return useMutation({
     mutationFn: createReminder,
     onMutate: () => {
-      void requestNotificationPermission();
+      void requestNotificationPermission().then((permission) => {
+        if (permission === "granted") void syncPushSubscription();
+      });
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: reminderKeys.all }),
   });

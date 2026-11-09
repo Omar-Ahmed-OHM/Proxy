@@ -8,6 +8,7 @@ import { useSpeechSynthesis } from "@/app/components/assistant/hooks/useSpeechSy
 import { ToastViewport } from "@/app/components/ui/Toast";
 import type { ToastData } from "@/app/components/ui/types";
 import { playChime, showSystemNotification, unlockAudioOnInteraction } from "@/lib/notifications";
+import { listenForPushResubscribe, syncPushSubscription } from "@/lib/push";
 import { useCompleteReminder, useReminders } from "../hooks/useReminders";
 import type { HeadsUpItem, Reminder } from "../types";
 import {
@@ -146,6 +147,13 @@ export function ReminderAlerts() {
   }, [reminders, tasks]);
 
   useEffect(() => unlockAudioOnInteraction(), []);
+
+  const userId = user?.id;
+  useEffect(() => {
+    if (userId) void syncPushSubscription();
+  }, [userId]);
+
+  useEffect(() => listenForPushResubscribe(), []);
 
   useEffect(() => {
     const timers = timersRef.current;

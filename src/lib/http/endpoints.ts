@@ -46,6 +46,11 @@ export const ENDPOINTS = {
   settings: {
     root: "/settings",
   },
+  push: {
+    subscribe: "/push/subscribe",
+    unsubscribe: "/push/unsubscribe",
+    test: "/push/test",
+  },
   assistant: {
     messages: "/assistant/messages",
     briefing: "/assistant/briefing",
